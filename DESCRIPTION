@@ -14,7 +14,8 @@ Imports:
 	dplyr,
 	lubridate,
 	tidyr,
-	magrittr
+	mgcv,
+	data.table	
 Suggests: 
     knitr,
     rmarkdown

@@ -17,7 +17,7 @@ shaw_sit(
   soils_df,
   nres,
   roughness,
-  measure_height,
+  measurement_height,
   ponding,
   itype,
   pintrcp,
