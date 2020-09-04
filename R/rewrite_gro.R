@@ -7,7 +7,6 @@
 #' Note to myself: the model I usually use is in: "SHAW/hourly/calibration_data/phenology_gam.rds"
 #'
 #' @import dplyr
-#' @import data.table
 #' @param model_dir This is the directory where all inputs will be written.
 #' @param frost File with snow outputs
 #' @param model Some kind of model object wit h SDD and lai_start

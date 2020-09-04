@@ -71,7 +71,3 @@ shaw_inp <- function(model_dir,
 }  # end function
 
 
-# Testing:
-
-inputs <- shaw_inp(model_dir = "/Volumes/research_storage2/arctic/arctic_point_modeling/SHAW/test_shaw")
-

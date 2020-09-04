@@ -45,12 +45,4 @@ shaw_temp <- function(model_dir,
 
 } # end function.
 
-# Example:
-observed <- data.frame(depth = c(0.1, 0.5, 1), VWC = c(0.4, 0.2, 0.1))
-
-shaw_temp(model_dir = "/Volumes/research_storage2/arctic/arctic_point_modeling/SHAW/test_shaw",
-         soil1 = 15,
-         lower_bc = 0,
-         temp_obs = data.frame(depth = c(0.1, 0.5, 1),
-                               temperature = c(10, 8, 2)))
 

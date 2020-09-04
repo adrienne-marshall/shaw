@@ -24,7 +24,7 @@ library(shaw)
 Make a minimal set up: 
 
 ```{r set up SHAW}
-test_model_dir <- "/Volumes/research_storage2/arctic/arctic_point_modeling/SHAW/test_shaw"
+test_model_dir <- paste0(getwd(), "/temp_dir")
 
 inputs <- shaw_inp(model_dir = test_model_dir)
 
