@@ -29,14 +29,5 @@ shaw_moi(
 \description{
 This function allows you to build SHAW files based on desired parameters.
 }
-\examples{
-observed <- data.frame(depth = c(0.1, 0.5, 1), VWC = c(0.4, 0.2, 0.1))
-shaw_moi(model_dir = "/Volumes/research_storage2/arctic/arctic_point_modeling/SHAW/test_shaw",
-        method = "half", iwrc = 3, soil1 = 15)
-
-shaw_moi(model_dir = "/Volumes/research_storage2/arctic/arctic_point_modeling/SHAW/test_shaw",
-        method = "observed", iwrc = 3, soil1 = 15, moi_obs = observed)
-
-}
 \keyword{SHAW.}
 \keyword{hydrology,}

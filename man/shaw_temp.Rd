@@ -26,12 +26,5 @@ shaw_temp(
 \description{
 This function allows you to build SHAW files based on desired parameters.
 }
-\examples{
-observed <- data.frame(depth = c(0.1, 0.5, 1), temperature = c(8, 2, 1))
-shaw_temp(model_dir = "/Volumes/research_storage2/arctic/arctic_point_modeling/SHAW/test_shaw",
-           soil1 = 15, temp_obs = observed)
-
-
-}
 \keyword{SHAW.}
 \keyword{hydrology,}

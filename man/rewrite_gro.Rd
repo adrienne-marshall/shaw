@@ -8,8 +8,7 @@ rewrite_gro(
   model_dir,
   frost = paste0(model_dir, "/out/frost.txt"),
   gro_file = paste0(model_dir, "/", basename(model_dir), ".gro"),
- 
-    model = "/Volumes/research_storage2/arctic/arctic_point_modeling/SHAW/hourly/calibration_data/phenology_gam.rds",
+  model,
   on_duration = 30,
   write_file = F
 )
@@ -33,6 +32,7 @@ Given a model with sdd as input, calculates first day of leaf out.
 }
 \details{
 This function allows you to build SHAW files based on desired parameters.
+Note to myself: the model I usually use is in: "SHAW/hourly/calibration_data/phenology_gam.rds"
 }
 \examples{
 observed <- data.frame(depth = c(0.1, 0.5, 1), VWC = c(0.4, 0.2, 0.1))

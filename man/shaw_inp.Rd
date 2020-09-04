@@ -42,7 +42,6 @@ shaw_inp(
 This function allows you to build SHAW files based on desired parameters.
 }
 \examples{
-shaw_inp(model_dir = "/Volumes/research_storage2/arctic/arctic_point_modeling/SHAW/test_shaw")
 
 }
 \keyword{SHAW.}
