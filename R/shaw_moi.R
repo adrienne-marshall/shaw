@@ -10,14 +10,6 @@
 #' @param site_file This is the site file - will be used to determine saturated or residual values.
 #' @keywords hydrology, SHAW.
 #' @export
-#' @examples
-#' observed <- data.frame(depth = c(0.1, 0.5, 1), VWC = c(0.4, 0.2, 0.1))
-
-#' shaw_moi(model_dir = "/Volumes/research_storage2/arctic/arctic_point_modeling/SHAW/test_shaw",
-#'         method = "half", iwrc = 3, soil1 = 15)
-#'
-#' shaw_moi(model_dir = "/Volumes/research_storage2/arctic/arctic_point_modeling/SHAW/test_shaw",
-#'         method = "observed", iwrc = 3, soil1 = 15, moi_obs = observed)
 #'
 shaw_moi <- function(model_dir,
                      method,

@@ -12,7 +12,6 @@
 #' @keywords hydrology, SHAW.
 #' @export
 #' @examples
-#' shaw_inp(model_dir = "/Volumes/research_storage2/arctic/arctic_point_modeling/SHAW/test_shaw")
 #'
 # To dos/possibly change:
 # 1. Consider removing the input file names - just hard code them?

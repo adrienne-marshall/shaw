@@ -173,30 +173,3 @@ shaw_sit <- function(model_dir, mode = "create", start, start_hour, end, lat_deg
 
 # Testing:
 
-soils_df <- data.frame(depth = seq(0, 2, by = 0.1),
-                       sand = 30,
-                       silt = 60,
-                       clay = 10,
-                       rock = 0,
-                       organic = 5,
-                       bulk_density = 1200,
-                       ksat = 50,
-                       klat = 0,
-                       air_entry = 0,
-                       theta_sat = 0.4,
-                       n = 1.4,
-                       theta_res = 0.05,
-                       l = 0.5,
-                       alpha = 1.5)
-
-site_file <- shaw_sit(model_dir = "/Volumes/research_storage2/arctic/arctic_point_modeling/SHAW/test_shaw",
-                      start = "2000-01-01", start_hour = 0, end = "2000-12-31",
-                      lat_deg = 60, lat_min = 0, slope = 10, aspect = 0, hrnoon = 12, elev = 300,
-                      soils_df = soils_df, nres = 5, roughness = 1, measurement_height = 10, ponding = 4,
-                      itype = 1, pintrcp = 0.5, xangle = 1,
-                      canalb = 0.2, tcrit = 0, min_stomatal_resistance = 150, stomatal_exp = 5, critical_leaf_water = -70,
-                      leaf_resist = 10^5, root_resist = 2*10^5,
-                      plant_height = 6, dchar = 1, clumping = 0.5, biomass = 4, LAI = 3, rooting = 0.5,
-                      residue_thickness = 5, residue_weight = 6000, residue_fraction = 0.8, residue_albedo = 0.25,
-                      iwrc = 3, ivlcbc = 1, itmpbc = 1, lower_bc_temp = 1, nsalt = 0)
-
