@@ -1,6 +1,7 @@
 #' Function to build SHAW moisture initial conditions for the soil profile.
 #'
 #' This function allows you to build SHAW files based on desired parameters.
+
 #' @param model_dir This is the directory where all inputs will be written.
 #' @param method Options are "saturated", "residual", "half", "observed". If method is "observed", moi_obs requires a data frame with depths and observed moisture. Will then do stepwise interpolation.
 #' @param moi_obs Observed data frame: column names must be depth and VWC.
@@ -16,11 +17,11 @@
 #'         method = "half", iwrc = 3, soil1 = 15)
 #'
 #' shaw_moi(model_dir = "/Volumes/research_storage2/arctic/arctic_point_modeling/SHAW/test_shaw",
-#'         method = "observed", iwrc = 3, soil1 = 15)
+#'         method = "observed", iwrc = 3, soil1 = 15, moi_obs = observed)
 #'
 shaw_moi <- function(model_dir,
                      method,
-                     moi_obs,
+                     moi_obs = NULL,
                      soil1,
                      iwrc = 3,
                      site_file = paste0(model_dir, "/", basename(model_dir), ".sit")){
@@ -55,10 +56,10 @@ shaw_moi <- function(model_dir,
     moi_vec <- as.numeric(soils$mean_moi)
   }
   if(method == "observed"){
-    soils2 <- dplyr::left_join(soils, moi_obs, by = "depth") %>%
-      tidyr::fill(VWC, .direction = "downup") %>%
-      dplyr::mutate(VWC = ifelse(VWC > theta_sat, theta_sat, VWC)) %>%
-      dplyr::mutate(VWC = ifelse(VWC < theta_res, theta_res, VWC))
+    soils2 <- dplyr::left_join(soils, moi_obs, by = "depth")
+    soils2 <- tidyr::fill(soils2, VWC, .direction = "downup")
+    soils2 <- dplyr::mutate(soils2, VWC = ifelse(VWC > theta_sat, theta_sat, VWC))
+    soils2 <- dplyr::mutate(soils2, VWC = ifelse(VWC < theta_res, theta_res, VWC))
     moi_vec <- as.numeric(soils2$VWC)
   }
 
@@ -72,9 +73,5 @@ shaw_moi <- function(model_dir,
 
 } # end function.
 
-# Example:
-observed <- data.frame(depth = c(0.1, 0.5, 1), VWC = c(0.4, 0.2, 0.1))
 
-shaw_moi(model_dir = "/Volumes/research_storage2/arctic/arctic_point_modeling/SHAW/test_shaw",
-         method = "half", iwrc = 3, soil1 = 15)
 

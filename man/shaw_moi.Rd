@@ -7,7 +7,7 @@
 shaw_moi(
   model_dir,
   method,
-  moi_obs,
+  moi_obs = NULL,
   soil1,
   iwrc = 3,
   site_file = paste0(model_dir, "/", basename(model_dir), ".sit")
@@ -35,7 +35,7 @@ shaw_moi(model_dir = "/Volumes/research_storage2/arctic/arctic_point_modeling/SH
         method = "half", iwrc = 3, soil1 = 15)
 
 shaw_moi(model_dir = "/Volumes/research_storage2/arctic/arctic_point_modeling/SHAW/test_shaw",
-        method = "observed", iwrc = 3, soil1 = 15)
+        method = "observed", iwrc = 3, soil1 = 15, moi_obs = observed)
 
 }
 \keyword{SHAW.}

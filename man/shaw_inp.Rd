@@ -37,15 +37,12 @@ shaw_inp(
 \item{output_freq}{Frequency in hours for outputs specified in outputs. Same value applied to all.}
 
 \item{inp_file}{Name of .inp file. Defaults to basename of the model directory.}
-
-\item{time_step}{Number of hours per time step; must be evenly divisible into 24.}
 }
 \description{
 This function allows you to build SHAW files based on desired parameters.
 }
 \examples{
-shaw_inputs(model_dir = "/Volumes/research_storage2/arctic/arctic_point_modeling/SHAW/test_shaw",
-start = "2000-01-01", start_hour = 0, end = "2000-12-31")
+shaw_inp(model_dir = "/Volumes/research_storage2/arctic/arctic_point_modeling/SHAW/test_shaw")
 
 }
 \keyword{SHAW.}

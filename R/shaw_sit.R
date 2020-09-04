@@ -1,12 +1,14 @@
 #' Function to build SHAW input files based on parameters
 #'
 #' This function allows you to build SHAW files based on desired parameters.
+#' @import dplyr
+#' @import utils
+
 #' @param model_dir This is the directory where all inputs will be written.
+#' @param mode "create" or "modify" to create a new site file or modify an existing one.
 #' @param start This is the start date, formatted as a y-m-d character.
 #' @param start_hour An integer (0-24) indicating start hour.
 #' @param end This is the end date, formatted as a y-m-d. Note there is no end hour.
-#' @param iversion Version of SHAW.Valid versions include Shaw2.3 through Shaw3.0.
-#' @param mtstep Time step: 0 = hourly, 1 = daily, 2 = same intervals as NRPDT. Defaults to 0.
 #' @param nres Number of desired residue nodes if the residue does not change over the simulation (required). if 0, no residue. Set to 1 if residue properties change.
 #' @param mcanflg Flag controlling options for input of plant growth curves and node spacing.  (0 = no plant growth, i.e. leaf area index and plant height are constant for simulation, and model will determine node spacing within the canopy; 1 = input files for plant growth are specified for each plant and model will determine node spacing within the canopy; 2 = no plant growth and allows user to input spacing and parameters of  plant canopy layers; 3 = input files for plant growth are specified for each plant and the user can specify desired heights above ground surface for canopy nodes.)  Option 3 is intended for subsequent comparison with measurements of temperature and humidity at specified heights within the canopy.
 #' If MCANFLG = 1, plant height, dchar, clumping, biomass, LAI, and rooting are not used, but are taken from the .gro file.
@@ -17,16 +19,13 @@
 #' "theta_sat", "n", "theta_res", "l", "alpha", "brooks_corey_lambda", "asalt", "dispersion_coefficient", "b".
 #' @keywords hydrology, SHAW.
 #' @export
-#' @examples
-#' shaw_inputs(model_dir = "/Volumes/research_storage2/arctic/arctic_point_modeling/SHAW/test_shaw",
-#' start = "2000-01-01", start_hour = 0, end = "2000-12-31")
 #'
 # To dos/possibly change:
 # 1. Consider removing the input file names - just hard code them?
 # 2. Consider allowing for different output frequencies - right now requires they're all the same.
 # 4. Add errors and warnings.
 
-shaw_sit <- function(model_dir, start, start_hour, end, lat_deg, lat_min, slope, aspect, elev,
+shaw_sit <- function(model_dir, mode = "create", start, start_hour, end, lat_deg, lat_min, slope, aspect, elev,
                      soils_df, nres, roughness, measurement_height, ponding, itype, pintrcp, xangle,
                      canalb, tcrit, min_stomatal_resistance, stomatal_exp, critical_leaf_water, leaf_resist, root_resist,
                      plant_height, dchar, clumping, biomass, LAI, rooting,
@@ -64,6 +63,8 @@ shaw_sit <- function(model_dir, start, start_hour, end, lat_deg, lat_min, slope,
   if(nsalt > 0){
     stop("This function isn't yet set up to deal with solutes.")
   }
+
+  if(mode == "create"){
 
   # Write site file.---------------
   site <- character()
@@ -157,6 +158,13 @@ shaw_sit <- function(model_dir, start, start_hour, end, lat_deg, lat_min, slope,
   site[(length(site) + 1):(length(site) + length(soils_lines))] <- soils_lines
 
   writeLines(site, paste0(model_dir, "/", basename(model_dir), ".sit"))
+
+  }
+
+  # If mode is modify:
+  if(mode == "modify"){
+    stop("I haven't implemented the code yet to modify existing site files. Nothing is being done.")
+  }
 
   return(site)
 

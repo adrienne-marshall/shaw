@@ -4,6 +4,9 @@
 #' Given a model with sdd as input, calculates first day of leaf out.
 #'
 #' This function allows you to build SHAW files based on desired parameters.
+#'
+#' @import dplyr
+#' @import data.table
 #' @param model_dir This is the directory where all inputs will be written.
 #' @param frost File with snow outputs
 #' @param model Some kind of model object wit h SDD and lai_start
@@ -56,9 +59,9 @@ rewrite_gro <- function(model_dir,
   }
 
   # Make date of lai onset based on summary.
-  summary <- mutate(summary,
+  summary <- dplyr::mutate(summary,
                     lai_start = round(mgcv::predict.gam(phen_mod, newdata = summary, type = "response")))
-  summary <- mutate(summary, mutate(maxlai = lai_start + 30))
+  summary <- dplyr::mutate(summary, mutate(maxlai = lai_start + 30))
 
   # Fill in if necessary.
   summary <- tidyr::fill(summary, sdd, maxlai, lai_start, .direction = "downup")
@@ -96,7 +99,7 @@ rewrite_gro <- function(model_dir,
     gro_new$day[nrow(gro_new)] <- 365
 
     if(write_file == T){
-      write.table(gro_new, file = gro_file,
+      utils::write.table(gro_new, file = gro_file,
                   col.names = FALSE, row.names = FALSE,
                   sep = "\t")
     }

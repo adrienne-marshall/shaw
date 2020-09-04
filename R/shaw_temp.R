@@ -9,13 +9,11 @@
 #' @keywords hydrology, SHAW.
 #' @export
 #' @examples
-#' observed <- data.frame(depth = c(0.1, 0.5, 1), VWC = c(0.4, 0.2, 0.1))
+#' observed <- data.frame(depth = c(0.1, 0.5, 1), temperature = c(8, 2, 1))
 
-#' shaw_moi(model_dir = "/Volumes/research_storage2/arctic/arctic_point_modeling/SHAW/test_shaw",
-#'         method = "half", iwrc = 3, soil1 = 15)
+#' shaw_temp(model_dir = "/Volumes/research_storage2/arctic/arctic_point_modeling/SHAW/test_shaw",
+#'            soil1 = 15, temp_obs = observed)
 #'
-#' shaw_moi(model_dir = "/Volumes/research_storage2/arctic/arctic_point_modeling/SHAW/test_shaw",
-#'         method = "observed", iwrc = 3, soil1 = 15)
 #'
 shaw_temp <- function(model_dir,
                      soil1 = 15,

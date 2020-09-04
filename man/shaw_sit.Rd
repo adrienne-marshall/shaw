@@ -6,6 +6,7 @@
 \usage{
 shaw_sit(
   model_dir,
+  mode = "create",
   start,
   start_hour,
   end,
@@ -79,6 +80,8 @@ shaw_sit(
 \arguments{
 \item{model_dir}{This is the directory where all inputs will be written.}
 
+\item{mode}{"create" or "modify" to create a new site file or modify an existing one.}
+
 \item{start}{This is the start date, formatted as a y-m-d character.}
 
 \item{start_hour}{An integer (0-24) indicating start hour.}
@@ -98,18 +101,9 @@ If MCANFLG = 1, plant height, dchar, clumping, biomass, LAI, and rooting are not
 \item{istomate}{Flag to select option for computing stomatal resistance; 1 = default computation of stomatal resistance as a function of leaf water potential; 2 = option for additional controls on stomatal conductance using Stewart-Jarvis type functions for solar radiation, air temperature and vapor pressure deficit.}
 
 \item{gro_file}{Defaults to sharing a name with the site. However, if nplants > 1 and MCANFLG == 1 this can be a vector of gro file names for each plant.}
-
-\item{iversion}{Version of SHAW.Valid versions include Shaw2.3 through Shaw3.0.}
-
-\item{mtstep}{Time step: 0 = hourly, 1 = daily, 2 = same intervals as NRPDT. Defaults to 0.}
 }
 \description{
 This function allows you to build SHAW files based on desired parameters.
-}
-\examples{
-shaw_inputs(model_dir = "/Volumes/research_storage2/arctic/arctic_point_modeling/SHAW/test_shaw",
-start = "2000-01-01", start_hour = 0, end = "2000-12-31")
-
 }
 \keyword{SHAW.}
 \keyword{hydrology,}

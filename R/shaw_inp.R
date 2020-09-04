@@ -9,12 +9,10 @@
 #' "soil liquid", "soil matric", "canopy temperature", "canopy humidity", "snow temperature", "energy balance", "water balance",
 #' "water flow", "root extract", "lateral", "frost", "salt", "soil solution"
 #' @param output_freq Frequency in hours for outputs specified in outputs. Same value applied to all.
-#' @param time_step Number of hours per time step; must be evenly divisible into 24.
 #' @keywords hydrology, SHAW.
 #' @export
 #' @examples
-#' shaw_inputs(model_dir = "/Volumes/research_storage2/arctic/arctic_point_modeling/SHAW/test_shaw",
-#' start = "2000-01-01", start_hour = 0, end = "2000-12-31")
+#' shaw_inp(model_dir = "/Volumes/research_storage2/arctic/arctic_point_modeling/SHAW/test_shaw")
 #'
 # To dos/possibly change:
 # 1. Consider removing the input file names - just hard code them?

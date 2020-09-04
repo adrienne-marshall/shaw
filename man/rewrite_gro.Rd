@@ -2,7 +2,7 @@
 % Please edit documentation in R/rewrite_gro.R
 \name{rewrite_gro}
 \alias{rewrite_gro}
-\title{Rewrites the SHAW gro file based on snow melt timing.}
+\title{Rewrites the SHAW gro file based on snow melt timing}
 \usage{
 rewrite_gro(
   model_dir,
