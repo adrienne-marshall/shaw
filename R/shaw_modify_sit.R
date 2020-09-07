@@ -1,11 +1,18 @@
+# Testing:
+model_dir <- "/Volumes/research_storage2/arctic/arctic_point_modeling"
+existing_site_file <- paste0(model_dir, "/SHAW/test_shaw/test_shaw.sit")
+
+
 #' Function to build SHAW input files based on parameters
 #'
 #' This function allows you to build SHAW files based on desired parameters.
+#' Most parameters default to NULL, and nothing in the site file changes. If you change any of the parameters from NULL, the parameter will change in the new site file.
 #' @import dplyr
 #' @import utils
 
 #' @param model_dir This is the directory where all inputs will be written.
-#' @param mode "create" or "modify" to create a new site file or modify an existing one.
+#' @param existing_site_file The existing site file
+#' @param new_site_file The new site file.
 #' @param start This is the start date, formatted as a y-m-d character.
 #' @param start_hour An integer (0-24) indicating start hour.
 #' @param end This is the end date, formatted as a y-m-d. Note there is no end hour.
@@ -21,37 +28,77 @@
 #' @export
 #'
 # To dos/possibly change:
-# 1. Consider removing the input file names - just hard code them?
+# 1. Maybe this should just take a site file as R text, rather than the path.
 # 2. Consider allowing for different output frequencies - right now requires they're all the same.
 # 4. Add errors and warnings.
 
-shaw_sit <- function(model_dir, mode = "create", start, start_hour, end, lat_deg, lat_min, slope, aspect, elev,
-                     soils_df, nres, roughness, measurement_height, ponding, itype, pintrcp, xangle,
-                     canalb, tcrit, min_stomatal_resistance, stomatal_exp, critical_leaf_water, leaf_resist, root_resist,
-                     plant_height, dchar, clumping, biomass, LAI, rooting,
-                     residue_thickness, residue_weight, residue_fraction,
-                     residue_albedo, lower_bc_temp, nsalt = 0, iwrc = 3,
-                     ivlcbc = 1, itmpbc = 1, dry_soil_albedo = 0.25, soil_albedo_exponent = 1,
-                     residue_coefficient = 50000, residue_krb = 6,
-                     isnotemp = 1, snotemp = 0, snow_roughness = 0.15,
-                     Kst = 100, Tlower = -999, Tupper = 999, Topt = 20, Kvpd =0.5, r = 0.5,
-                     mcanflg = 0, istomate = 2, canma = -53.72, canmb = 1.32, wcandt = 0, hrnoon = 12,
-                     nplants = 1, nsp = 0, nsolutes = 0, error_tol = 0.01, time_step = 1,
-                     nrchang = 0, gmcdt = 0,
-                     debugging_seq = c(0, 0, 0, 0, 0, 0),
-                     site_file = paste0(basename(model_dir), ".sit"),
-                     gro_file = paste0(basename(model_dir), ".gro"),
-                     run_name = basename(model_dir)
-){ # begin function
+shaw_modify_sit <- function(model_dir,
+                            existing_site_file = paste0(model_dir, "/", basename(model_dir), ".sit"),
+                            start = NULL, start_hour = NULL, end = NULL, lat_deg = NULL, lat_min = NULL, slope = NULL, aspect = NULL, elev = NULL,
+                     soils_df = NULL, nres = NULL, roughness = NULL, measurement_height = NULL, ponding = NULL, itype = NULL, pintrcp = NULL, xangle = NULL,
+                     canalb = NULL, tcrit = NULL, min_stomatal_resistance = NULL, stomatal_exp = NULL, critical_leaf_water = NULL, leaf_resist = NULL, root_resist = NULL,
+                     plant_height = NULL, dchar = NULL, clumping = NULL, biomass = NULL, LAI = NULL, rooting = NULL,
+                     residue_thickness = NULL, residue_weight = NULL, residue_fraction = NULL,
+                     residue_albedo = NULL, lower_bc_temp = NULL, nsalt = NULL, iwrc = NULL,
+                     ivlcbc  = NULL, itmpbc  = NULL, dry_soil_albedo  = NULL, soil_albedo_exponent = NULL,
+                     residue_coefficient = NULL, residue_krb = NULL,
+                     isnotemp = NULL, snotemp = NULL, snow_roughness = NULL,
+                     Kst = NULL, Tlower = NULL, Tupper = NULL, Topt = NULL, Kvpd = NULL, r = NULL,
+                     mcanflg = NULL, istomate = NULL, canma = NULL, canmb = NULL, wcandt = NULL, hrnoon = NULL,
+                     nplants = NULL, nsp = NULL, nsolutes = NULL, error_tol = NULL, time_step = NULL,
+                     nrchang = NULL, gmcdt = NULL,
+                     debugging_seq = NULL,
+                     gro_file = NULL,
+                     run_name = NULL
+                     ){ # begin function
 
-  # Set up inputs.-------------
-  if(!dir.exists(model_dir)){dir.create(model_dir)}
-  out_dir <- paste0(model_dir, "/out")
-  if(!dir.exists(out_dir)){dir.create(out_dir)}
 
-  # Make some warnings for cases we haven't made yet. -------------
+  # read site file
+  site <- readLines(existing_site_file)
+  site_lines <- lapply(site, strsplit, split = " |\t")
+  site_lines <- lapply(site_lines, unlist)
 
-  if(nsp != 0){
+  # Get relevant flags that determine locations of parameters:
+  nplants <- as.numeric(site_lines[[4]][1]) # number of plants
+  nr <- as.numeric(site_lines[[4]][3]) # number of residue nodes.
+  ns <- as.numeric(site_lines[[4]][4]) # number of soil nodes.
+  mcanflg <- as.numeric(site_lines[[6]][1]) # growth type
+  istomate <- as.numeric(site_lines[[6]][2]) # stomatal conductance flag
+  max_line <- length(site) # max number of lines
+  # to dos: ivlcbc, itmpbc
+
+  if(nplants > 0){
+    f_1s <- 7:(6+nplants) # F-1 series of lines.
+    if(istomate == 2){fas <- (max(f_1s) + 1):(max(f_1s) + nplants)} # Fa series
+    if(mcanflg == 0){
+      f0s <- (max(fas) + 1):(max(fas) + nplants) # F0 series
+      g <- max(f0s) + 1 # line G, snow
+    } else if(mcanflg == 1){
+      f1s <- (max(f_1s) + 1):(max(f_1s) + nplants)
+      g <- max(f1s) + 1
+      }
+  } else if (nplants == 0){g <- 6}
+
+  # G1 series not included for multiple snow nodes.
+
+  if(nr > 0){
+    h <- g + 1 # basic residue info
+    h1 <- h + 1 # more complicated residue info. # solutes would go next if included.
+    j1 <- h1 + 1 # start soils.
+    } else if (nr == 0){j1 <- g + 1}# end residue.
+
+
+  ivlcbc <- as.numeric(site_lines[[j1]][1]) # water flow at lower boundary flag
+  itmpbc <- as.numeric(site_lines[[j1]][2]) # temperature lower boundary flag.
+
+  if(itmpbc == 1){
+    j2 <- j1 + 1 # lower temperature boundary condition.
+    j3_1 <- j2 + 1 # j3_1 is first line of soils.
+  } else {j3_1 <- j1 + 1}
+
+
+    # Make some warnings for cases we haven't made yet. -------------
+  if(nsp != 0 & !is.null(nsp)){
     stop("NSP is required to be 0; greater values have not been implemented at this time.
                     Suggest starting in summer so NSP can reasonably be 0 for now.")
   }
@@ -64,15 +111,39 @@ shaw_sit <- function(model_dir, mode = "create", start, start_hour, end, lat_deg
     stop("This function isn't yet set up to deal with solutes.")
   }
 
-  if(mode == "create"){
+  if(nrchang == 1){
+    stop("This function isn't set up to deal with changing residue layers.")
+  }
 
   # Write site file.---------------
-  site <- character()
-  site[1] <- run_name # Line A.
-  start <- lubridate::ymd(start)
-  end <- lubridate::ymd(start)
-  site[2] <- paste(lubridate::yday(start), start_hour, lubridate::year(start),
-                   lubridate::yday(end), lubridate::year(end)) # Line B
+  if(!is.null(run_name)){site[1] <- run_name}  # Line A.
+
+  # Line B
+  if(!is.null(start)){
+    start <- lubridate::ymd(start)
+    site_lines[[2]][1:3] <- paste(lubridate::yday(start), start_hour, lubridate::year(start))
+  }
+  if(!is.null(end)){
+    end <- lubridate::ymd(start)
+    site_lines[[2]][4:5] <- paste(lubridate::yday(end), lubridate::year(end))
+  }
+
+  # For each parameter, extract the value from the site file if not given.
+  # Then paste everything together.
+  # Possible approach: include data file with line number and position and do this in a loop.
+  if(is.null(lat_deg)){lat_deg <- site_lines[[3]][1]}
+  if(is.null(lat_min)){lat_min <- site_lines[[3]][2]}
+  if(is.null(slope)){slope <- site_lines[[3]][3]}
+  if(is.null(aspect)){aspect <- site_lines[[3]][4]}
+  if(is.null(hrnoon)){hrnoon <- site_lines[[3]][5]}
+  if(is.null(elev)){elev <- site_lines[[3]][6]}
+
+  # Alternative approach:
+  par_info <- read_csv("data/SHAW_parameters.csv")
+
+  fun_replace <- function(var){
+    if()
+  }
 
   site[3] <- paste(lat_deg, lat_min, slope, aspect, hrnoon, elev) # Line C
 
@@ -157,19 +228,22 @@ shaw_sit <- function(model_dir, mode = "create", start, start_hour, end, lat_deg
   soils_lines <- apply(soils_df, MARGIN = 1, FUN = paste, collapse = "\t") # make soils lines.
   site[(length(site) + 1):(length(site) + length(soils_lines))] <- soils_lines
 
-  writeLines(site, paste0(model_dir, "/", basename(model_dir), ".sit"))
+  writeLines(site, site_file)
 
-  }
-
-  # If mode is modify:
-  if(mode == "modify"){
-    stop("I haven't implemented the code yet to modify existing site files. Nothing is being done.")
-  }
 
   return(site)
 
 }  # end function
 
+# Notes on line numbers:
+# 1. Line A (run timing)
+# 2. Line B (start/end)
+# 3. Line C (lat, slope aspect.)
+# 4. Line D - NPLANT, NR, NS, etc. Right now, we're not including snow and changeable residue nodes.
+# But NPLANT and NSOIL affect the run.
+# 5. Line E (roughness, measurement height)
+# 6. Line F (MCANFLG, ISTOMATE, coefficients)
+# 7-7 + NPlant
 
-# Testing:
+
 

@@ -64,8 +64,6 @@ shaw_inp <- function(model_dir,
 
   inp[(x+2):(x+length(out_files) + 1)] <- out_files
 
-  writeLines(inp, paste0(model_dir, "/", inp_file))
-
   return(inp)
 
 }  # end function

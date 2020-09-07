@@ -39,8 +39,6 @@ shaw_temp <- function(model_dir,
   temp_vec <- paste(temp_vec, collapse = " ")
   ans <- paste(start, temp_vec, collapse = " ")
 
-  writeLines(ans, paste0(model_dir, "/", basename(model_dir), ".tem"))
-
   return(ans)
 
 } # end function.

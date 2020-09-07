@@ -59,8 +59,6 @@ shaw_moi <- function(model_dir,
   moi_vec <- paste(moi_vec, collapse = " ")
   ans <- paste(start, moi_vec, collapse = " ")
 
-  writeLines(ans, paste0(model_dir, "/", basename(model_dir), ".moi"))
-
   return(ans)
 
 } # end function.
