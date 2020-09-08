@@ -5,7 +5,7 @@
 \title{Function to build SHAW input files based on parameters}
 \usage{
 shaw_modify_sit(
-  existing_site_file,
+  site,
   start = NULL,
   start_hour = NULL,
   end = NULL,
@@ -76,8 +76,6 @@ shaw_modify_sit(
 )
 }
 \arguments{
-\item{existing_site_file}{The existing site file}
-
 \item{start}{This is the start date, formatted as a y-m-d character.}
 
 \item{start_hour}{An integer (0-24) indicating start hour.}
@@ -99,6 +97,8 @@ If MCANFLG = 1, plant height, dchar, clumping, biomass, LAI, and rooting are not
 \item{gro_file}{Defaults to sharing a name with the site. However, if nplants > 1 and MCANFLG == 1 this can be a vector of gro file names for each plant.}
 
 \item{model_dir}{This is the directory where all inputs will be written.}
+
+\item{existing_site_file}{The existing site file}
 
 \item{new_site_file}{The new site file.}
 }
