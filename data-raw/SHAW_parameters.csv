@@ -9,7 +9,7 @@ elev,c,3,6
 nplants,d,4,1
 nsp,d,4,2
 nr,d,4,3
-nsp,d,4,4
+ns,d,4,4
 nsalt,d,4,5
 error_tol,d,4,6
 time_step,d,4,7

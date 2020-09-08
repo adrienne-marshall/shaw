@@ -45,7 +45,7 @@ soils_df <- data.frame(depth = seq(0, 2, by = 0.1),
                        l = 0.5,
                        alpha = 1.5)
 
-site_file <- shaw_sit(model_dir = test_model_dir,
+site_file <- shaw_create_sit(model_dir = test_model_dir,
                       start = "2003-01-01", start_hour = 0, end = "2005-12-31",
                       lat_deg = 60, lat_min = 0, slope = 10, aspect = 0, hrnoon = 12, elev = 300,
                       soils_df = soils_df, nres = 5, roughness = 1, measurement_height = 10, ponding = 4,
@@ -55,6 +55,9 @@ site_file <- shaw_sit(model_dir = test_model_dir,
                       residue_thickness = 5, residue_weight = 6000, residue_fraction = 0.8, residue_albedo = 0.25,
                       iwrc = 3, ivlcbc = 1, itmpbc = 1, lower_bc_temp = 1, nsalt = 0,
                       plant_height = 6, dchar = 0.5, clumping = 0.5, biomass = 4, LAI = 3, rooting = 0.5)
+
+shaw_modify_sit(model_dir = "/Volumes/research_storage2/arctic/arctic_point_modeling/SHAW/test_shaw",
+                lat_deg = 65)
 
 moi <- shaw_moi(model_dir = test_model_dir,
                 method = "half", iwrc = 3, soil1 = 15)
