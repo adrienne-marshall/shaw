@@ -43,11 +43,6 @@ shaw_create_sit <- function(model_dir, start, start_hour, end, lat_deg, lat_min,
                      run_name = basename(model_dir)
 ){ # begin function
 
-  # Set up inputs.-------------
-  if(!dir.exists(model_dir)){dir.create(model_dir)}
-  out_dir <- paste0(model_dir, "/out")
-  if(!dir.exists(out_dir)){dir.create(out_dir)}
-
   # Make some warnings for cases we haven't made yet. -------------
 
   if(nsp != 0){

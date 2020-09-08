@@ -30,8 +30,7 @@
 # 2. Consider allowing for different output frequencies - right now requires they're all the same.
 # 4. Add errors and warnings.
 
-shaw_modify_sit <- function(model_dir,
-                            existing_site_file = paste0(model_dir, "/", basename(model_dir), ".sit"),
+shaw_modify_sit <- function(existing_site_file,
                             start = NULL, start_hour = NULL, end = NULL,
                           lat_deg = NULL, lat_min = NULL, slope = NULL, aspect = NULL, elev = NULL,
                      soils_df = NULL, nres = NULL, roughness = NULL, measurement_height = NULL, ponding = NULL, itype = NULL, pintrcp = NULL, xangle = NULL,
@@ -51,8 +50,7 @@ shaw_modify_sit <- function(model_dir,
                      run_name = NULL
                      ){ # begin function
 
-  # read site file
-  site <- readLines(existing_site_file)
+  # split site file.
   site_lines <- lapply(site, strsplit, split = " |\t")
   site_lines <- lapply(site_lines, unlist)
 

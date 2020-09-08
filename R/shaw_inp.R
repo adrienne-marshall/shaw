@@ -31,11 +31,6 @@ shaw_inp <- function(model_dir,
                      wea_file = paste0(basename(model_dir), ".wea"),
                      sink_file = paste0(basename(model_dir), ".sink")){ # begin function
 
-  # Set up inputs.-------------
-  if(!dir.exists(model_dir)){dir.create(model_dir)}
-  out_dir <- paste0(model_dir, "/out")
-  if(!dir.exists(out_dir)){dir.create(out_dir)}
-
   # Write input file.------------
   inp <- character()
   inp[1] <- iversion # line A

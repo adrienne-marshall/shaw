@@ -5,8 +5,7 @@
 \title{Function to build SHAW input files based on parameters}
 \usage{
 shaw_modify_sit(
-  model_dir,
-  existing_site_file = paste0(model_dir, "/", basename(model_dir), ".sit"),
+  existing_site_file,
   start = NULL,
   start_hour = NULL,
   end = NULL,
@@ -77,8 +76,6 @@ shaw_modify_sit(
 )
 }
 \arguments{
-\item{model_dir}{This is the directory where all inputs will be written.}
-
 \item{existing_site_file}{The existing site file}
 
 \item{start}{This is the start date, formatted as a y-m-d character.}
@@ -100,6 +97,8 @@ If MCANFLG = 1, plant height, dchar, clumping, biomass, LAI, and rooting are not
 \item{istomate}{Flag to select option for computing stomatal resistance; 1 = default computation of stomatal resistance as a function of leaf water potential; 2 = option for additional controls on stomatal conductance using Stewart-Jarvis type functions for solar radiation, air temperature and vapor pressure deficit.}
 
 \item{gro_file}{Defaults to sharing a name with the site. However, if nplants > 1 and MCANFLG == 1 this can be a vector of gro file names for each plant.}
+
+\item{model_dir}{This is the directory where all inputs will be written.}
 
 \item{new_site_file}{The new site file.}
 }
