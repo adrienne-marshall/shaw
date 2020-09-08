@@ -30,7 +30,7 @@
 # 2. Consider allowing for different output frequencies - right now requires they're all the same.
 # 4. Add errors and warnings.
 
-shaw_modify_sit <- function(existing_site_file,
+shaw_modify_sit <- function(site,
                             start = NULL, start_hour = NULL, end = NULL,
                           lat_deg = NULL, lat_min = NULL, slope = NULL, aspect = NULL, elev = NULL,
                      soils_df = NULL, nres = NULL, roughness = NULL, measurement_height = NULL, ponding = NULL, itype = NULL, pintrcp = NULL, xangle = NULL,
